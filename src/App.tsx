@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { I18nProvider } from './lib/i18n';
 import AuthenticatedLayout from './components/global/AuthenticatedLayout';
@@ -9,27 +9,28 @@ import { setStoredAccessToken, setStoredAuthUser } from './lib/utils/auth';
 const OverviewPage = lazy(() => import('./pages/OverviewPage'));
 const MonitoringPage = lazy(() => import('./pages/MonitoringPage'));
 
-function useHashToken() {
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (!hash) return;
-    const params = new URLSearchParams(hash.slice(1));
-    const token = params.get('access_token');
-    const userJson = params.get('user');
-    if (token) {
-      setStoredAccessToken(token);
-      if (userJson) {
-        try {
-          setStoredAuthUser(JSON.parse(decodeURIComponent(userJson)));
-        } catch { /* ignore */ }
-      }
+// Read token from hash BEFORE React renders (synchronous)
+(function initHashToken() {
+  const hash = window.location.hash;
+  if (!hash) return;
+  const params = new URLSearchParams(hash.slice(1));
+  const token = params.get('access_token');
+  const userJson = params.get('user');
+  if (token) {
+    setStoredAccessToken(token);
+    if (userJson) {
+      try {
+        setStoredAuthUser(JSON.parse(userJson));
+      } catch { /* ignore */ }
     }
-    history.replaceState(null, '', window.location.pathname);
-  }, []);
-}
+    // Fresh login — reset local monitoring state
+    fetch('/api/xiaomi/logout', { method: 'POST' }).catch(() => {});
+    fetch('/api/active_cams', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{"active_cams":[]}' }).catch(() => {});
+  }
+  history.replaceState(null, '', window.location.pathname);
+})();
 
 export default function App() {
-  useHashToken();
 
   return (
     <I18nProvider>

@@ -283,8 +283,8 @@ export function clearAuthSession(): void {
 }
 
 export function logoutAuthSession(): void {
-  markManualSignOut();
-  clearAuthSession();
+  const vercelUrl = import.meta.env.VITE_VERCEL_URL || 'https://monitoring-dashboard-eosin.vercel.app';
+  window.location.replace(`${vercelUrl}/login`);
 }
 
 export async function bootstrapSessionWithToken(token: string, fallbackRole?: string, ngoId?: string): Promise<AuthUser> {
@@ -316,40 +316,12 @@ export async function bootstrapSessionWithToken(token: string, fallbackRole?: st
 }
 
 export async function refreshAuthSession(): Promise<AuthUser | null> {
-  if (isManualSignOutActive()) {
-    return null;
-  }
-
-  if (refreshInFlight) return refreshInFlight;
-
-  refreshInFlight = (async () => {
-    const clearEpochAtStart = authClearEpoch;
-
-    try {
-      const refreshed = await refreshAccessToken();
-      if (clearEpochAtStart !== authClearEpoch || isManualSignOutActive()) {
-        return null;
-      }
-      clearManualSignOut();
-      setStoredAccessToken(refreshed.accessToken);
-      const user = await fetchCurrentUserWithToken(refreshed.accessToken);
-      if (clearEpochAtStart !== authClearEpoch || isManualSignOutActive()) {
-        return null;
-      }
-      setStoredAuthUser(user);
-      return user;
-    } catch (error) {
-      if (shouldClearSessionForRefreshError(error)) {
-        clearAuthSession();
-        return null;
-      }
-      throw error;
-    } finally {
-      refreshInFlight = null;
-    }
-  })();
-
-  return refreshInFlight;
+  // Local frontend cannot refresh tokens (cookie is bound to AWS domain).
+  // Redirect to Vercel to re-authenticate and come back with a fresh token.
+  const vercelUrl = import.meta.env.VITE_VERCEL_URL || 'https://monitoring-dashboard-eosin.vercel.app';
+  const returnPath = window.location.pathname;
+  window.location.href = `${vercelUrl}/login?returnLocal=${encodeURIComponent(returnPath)}`;
+  return null;
 }
 
 export async function ensureAuthenticatedSession(): Promise<AuthUser | null> {

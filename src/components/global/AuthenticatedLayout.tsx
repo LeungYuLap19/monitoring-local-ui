@@ -58,6 +58,7 @@ export default function AuthenticatedLayout() {
               onOpenClipsModal: () => state.setIsClipsOpen(true),
               onGenerateLog: () => state.setIsLogPreviewOpen(true),
               onOpenXiaomiLogin: () => state.setIsXiaomiLoginOpen(true),
+              onXiaomiLogout: state.handleXiaomiLogout,
               xiaomiConnected: state.xiaomiConnected,
               showToast: state.showToast,
               navigate: state.navigate,

@@ -15,6 +15,7 @@ export interface LayoutContext {
   onOpenClipsModal: () => void;
   onGenerateLog: () => void;
   onOpenXiaomiLogin: () => void;
+  onXiaomiLogout: () => void;
   xiaomiConnected: boolean;
   showToast: (message: string) => void;
   navigate: NavigateFunction;

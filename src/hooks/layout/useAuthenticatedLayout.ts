@@ -90,12 +90,9 @@ export function useAuthenticatedLayout() {
   }, [navigate, showToast]);
 
   const handleLogout = useCallback(() => {
-    axios.post(`${PET_MONITOR_API_BASE_URL}/api/xiaomi/logout`).catch(() => {});
-    axios.post(`${PET_MONITOR_API_BASE_URL}/api/active_cams`, { active_cams: [] }).catch(() => {});
-    queryClient.clear();
-    logoutAuthSession();
-    redirectToLogin(t('auth.toasts.loggedOut'));
-  }, [queryClient, redirectToLogin, t]);
+    const vercelUrl = import.meta.env.VITE_VERCEL_URL || 'https://monitoring-dashboard-eosin.vercel.app';
+    window.location.href = `${vercelUrl}/login?logout=true`;
+  }, []);
 
   const handleXiaomiLogout = useCallback(async () => {
     try {

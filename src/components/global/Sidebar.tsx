@@ -18,7 +18,7 @@ function buildRedirectUrl(url: string): string {
   if (!token) return url;
   const hash = new URLSearchParams();
   hash.set('access_token', token);
-  if (user) hash.set('user', encodeURIComponent(JSON.stringify(user)));
+  if (user) hash.set('user', JSON.stringify(user));
   return `${url}#${hash.toString()}`;
 }
 
@@ -109,17 +109,6 @@ export default function Sidebar({
                   >
                     <CreditCard className="size-3.5" />
                     <span>{t('nav.subscription')}</span>
-                  </Button>
-                )}
-                {xiaomiConnected && (
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    onClick={() => { setUserMenuOpen(false); onXiaomiLogout?.(); }}
-                    className="w-full justify-start gap-2 rounded-lg px-3 py-2 text-xs font-semibold text-amber-600 hover:bg-amber-50 hover:text-amber-700"
-                  >
-                    <img src={xiaomiIcon} alt="" className="size-3.5" />
-                    <span>{t('xiaomi.logout')}</span>
                   </Button>
                 )}
                 <Button

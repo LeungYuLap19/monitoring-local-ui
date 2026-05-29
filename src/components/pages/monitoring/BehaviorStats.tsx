@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { AlertTriangle, ChevronDown, FileText, RefreshCw, Sparkles, TrendingUp, TrendingDown, Clock, Utensils, Activity, AlertCircle } from 'lucide-react';
+import { AlertTriangle, ChevronDown, RefreshCw, Sparkles, TrendingUp, TrendingDown, Clock, Utensils, Activity, AlertCircle } from 'lucide-react';
 import { BehaviorStatsProps } from '../../../types';
 import { Bar, BarChart, CartesianGrid, Cell, Line, LineChart, Pie, PieChart, XAxis, YAxis } from 'recharts';
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from '../../ui/chart';
@@ -17,12 +17,11 @@ export default function BehaviorStats({
   trendStatsByTime,
   activeCategory,
   totalActivities,
-  onGenerateLog,
   onRefresh,
   isLoading = false,
   error = null,
   placeholder = null,
-}: BehaviorStatsProps) {
+}: Omit<BehaviorStatsProps, 'onGenerateLog'>) {
   const { t } = useTranslation();
 
   const barChartConfig: ChartConfig = {
@@ -272,16 +271,6 @@ export default function BehaviorStats({
               </div>
             </>
           )}
-
-          <Button
-            id="generate-daily-log-btn"
-            onClick={onGenerateLog}
-            className="w-full py-3 group"
-            disabled={Boolean(placeholder) || totalActivities === 0}
-          >
-            <FileText className="size-4 shrink-0 transition-transform group-hover:-translate-y-0.5" />
-            <span>{t('monitoring.stats.generateLog')}</span>
-          </Button>
         </CardContent>
       </Card>
     </div>

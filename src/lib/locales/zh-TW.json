@@ -349,7 +349,8 @@
       "linkedTo": "已連結至 {{camera}}",
       "linkedHere": "已連結此攝影機",
       "notLinked": "未連結",
-      "empty": "找不到寵物。"
+      "empty": "找不到寵物。",
+      "conflictError": "請先取消連結目前的寵物，再連結新的寵物。"
     },
     "toasts": {
       "cameraSwitch": "已自動打開監測鏡頭並載入對應寵物住客數據"
@@ -376,52 +377,20 @@
     }
   },
   "clientView": {
-    "bannerBadge": "家長即時監看",
-    "bannerTitle": "家長端即時監看",
-    "bannerDescription": "此頁會顯示已連結寵物的即時畫面、行為摘要與最新片段。",
-    "heroBadge": "每日活動日誌",
-    "heroTitle": "{{name}} 今天的住店小札",
-    "heroSubtitle": "親愛的 {{name}} 家長：以下是寶貝本日在救兔之家的智慧活動日誌",
-    "summaryLabel": "整體行為分析",
-    "statsLabel": "今日捕捉行為明細",
-    "tipTitle": "溫馨叮嚀:",
-    "tipContent": "寵物通常在傍晚與清晨氣候溫和時活動能力較大。如您對日誌內容有任何疑問，或想瞭解更多寶貝照拂狀況，請隨時使用右下角聯絡工作人員，我們會在第一時間爲您解答！祝寶貝入住愉快！",
-    "feedbackTitle": "您對本日的住店小札感到滿意嗎？",
-    "feedbackSubtitle": "您的反饋是我們持續提供好品質寵物看護照料的最大動力！",
-    "liked": "家長已按讚",
-    "likeBtn": "給今天的小札按個讚",
-    "commentsLabel": "家長即時留言 (留言板)",
-    "commentAvatar": "家",
-    "commentAuthor": "兔寶家長",
-    "commentPlaceholder": "在此回填家長意見或回覆工作人員...",
-    "commentSubmit": "發表留言",
-    "simulatingLabel": "即時監看:",
-    "clipsLabel": "本日智慧節選片段",
-    "clipDrinking": "飲水精華片段",
-    "clipDrinkingTime": "12:44 下午 - 喝水 30s",
-    "clipSleep": "休息睡眠片段",
-    "clipSleepTime": "15:40 下午 - 放風躺下休息 1min",
-    "summaryText": "{{name}} 今天適應良好。智慧監測顯示，寶貝今天共完成了 {{count}}次 各類行為，比昨日稍多。其中，其進食狀態極為穩定，休息時間充足安穩。我們會繼續為寶貝追蹤照料。",
-    "healthLabel": "健康與照護巡邏",
-    "healthStatus": "全日無異常事件。活動健康度 100%",
-    "healthStatusLive": "即時監測已連線，資料持續更新。",
-    "healthStatusOffline": "相機或監測遙測目前離線。",
-    "healthCamera": "已連結相機:",
-    "healthStream": "即時畫面:",
-    "healthStreamLive": "連線中",
-    "healthStreamOffline": "無法使用",
-    "healthBehavior": "目前行為:",
-    "healthTelemetry": "遙測狀態:",
-    "noClips": "目前沒有最新片段",
-    "noClipsHint": "已連結相機的 PetMonitor 錄影出片後會顯示在此。",
-    "healthDiet": "飲食攝水量:",
-    "healthDietValue": "充足 (良好)",
-    "healthRoomTemperature": "房間溫度:",
-    "healthRoomTemperatureValue": "-- °C",
-    "healthRoomHumidity": "房間濕度:",
-    "healthRoomHumidityValue": "--%",
-    "healthMood": "感官及精神:",
-    "healthMoodValue": "活力飽滿"
+    "title": "寵物活動報告",
+    "export": "匯出 PDF",
+    "dateRange": {
+      "today": "今天",
+      "threeDays": "3 天",
+      "sevenDays": "7 天"
+    },
+    "timeline": {
+      "title": "行為時間軸"
+    },
+    "events": {
+      "title": "近期活動紀錄",
+      "empty": "此期間無活動紀錄。"
+    }
   },
   "overview": {
     "searchPlaceholder": "搜索攝像頭...",

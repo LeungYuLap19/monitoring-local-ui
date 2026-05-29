@@ -20,7 +20,8 @@ export default function MonitoringHeader({
   reconnectDisabled = false,
   xiaomiConnected,
   onOpenXiaomiLogin,
-}: MonitoringHeaderProps) {
+  onXiaomiLogout,
+}: MonitoringHeaderProps & { onXiaomiLogout?: () => void }) {
   const { t } = useTranslation();
   return (
     <div id="monitoring-grid-header" className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm">
@@ -99,6 +100,18 @@ export default function MonitoringHeader({
           >
             <img src={xiaomiIcon} alt="" className="size-3.5" />
             <span>{xiaomiConnected ? t('xiaomi.connectCamera') : t('xiaomi.signIn')}</span>
+          </Button>
+        )}
+
+        {xiaomiConnected && onXiaomiLogout && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onXiaomiLogout}
+            className="text-amber-600 border-amber-200 hover:bg-amber-50 hover:text-amber-700"
+          >
+            <img src={xiaomiIcon} alt="" className="size-3.5" />
+            <span>{t('xiaomi.logout')}</span>
           </Button>
         )}
       </div>

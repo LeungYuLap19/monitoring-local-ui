@@ -349,7 +349,8 @@
       "linkedTo": "Linked to {{camera}}",
       "linkedHere": "Linked here",
       "notLinked": "Not linked",
-      "empty": "No pets found."
+      "empty": "No pets found.",
+      "conflictError": "Please disconnect the current pet first before linking another pet."
     },
     "toasts": {
       "cameraSwitch": "Camera switched — loading pet monitoring data."
@@ -376,52 +377,20 @@
     }
   },
   "clientView": {
-    "bannerBadge": "Parent Live View",
-    "bannerTitle": "Live Client Monitoring View",
-    "bannerDescription": "This page now shows the linked pet's live stream, behavior summary, and recent clips.",
-    "heroBadge": "HKBR Daily Activity Log",
-    "heroTitle": "{{name}}'s Day at the Hotel",
-    "heroSubtitle": "Dear {{name}}'s parent: here is your pet's smart activity log for today at HKBR Bunny Hotel",
-    "summaryLabel": "Behavior Summary",
-    "statsLabel": "Today's Activity Breakdown",
-    "tipTitle": "Friendly Reminder:",
-    "tipContent": "Pets are typically most active during dawn and dusk when temperatures are mild. If you have any questions about this log or want to learn more about your pet's care, please contact our staff anytime using the button in the bottom right. Wishing your pet a happy stay!",
-    "feedbackTitle": "Are you satisfied with today's journal?",
-    "feedbackSubtitle": "Your feedback helps us continue providing quality pet care!",
-    "liked": "Liked",
-    "likeBtn": "Like today's journal",
-    "commentsLabel": "Parent Comments",
-    "commentAvatar": "P",
-    "commentAuthor": "Pet Parent",
-    "commentPlaceholder": "Leave a comment or reply to staff...",
-    "commentSubmit": "Post Comment",
-    "simulatingLabel": "Live update for:",
-    "clipsLabel": "Today's AI-Selected Clips",
-    "clipDrinking": "Drinking highlight clip",
-    "clipDrinkingTime": "12:44 PM - Drinking 30s",
-    "clipSleep": "Resting/sleeping clip",
-    "clipSleepTime": "3:40 PM - Resting after exercise 1min",
-    "summaryText": "{{name}} adapted well today. Smart monitoring shows {{count}} total activities, slightly more than yesterday. Eating patterns are very stable, and rest time is sufficient. We will continue to monitor and care for your pet.",
-    "healthLabel": "Health & Care Patrol",
-    "healthStatus": "No abnormal events all day. Activity health score 100%",
-    "healthStatusLive": "Live monitoring is connected and updating.",
-    "healthStatusOffline": "Camera or telemetry is currently offline.",
-    "healthCamera": "Linked camera:",
-    "healthStream": "Live stream:",
-    "healthStreamLive": "Streaming",
-    "healthStreamOffline": "Unavailable",
-    "healthBehavior": "Current behavior:",
-    "healthTelemetry": "Telemetry:",
-    "noClips": "No recent clips available",
-    "noClipsHint": "Recent PetMonitor recordings for this linked camera will appear here.",
-    "healthDiet": "Diet & water intake:",
-    "healthDietValue": "Sufficient (Good)",
-    "healthRoomTemperature": "Room temperature:",
-    "healthRoomTemperatureValue": "-- °C",
-    "healthRoomHumidity": "Room humidity:",
-    "healthRoomHumidityValue": "--%",
-    "healthMood": "Senses & mood:",
-    "healthMoodValue": "Energetic"
+    "title": "Pet Activity Report",
+    "export": "Export PDF",
+    "dateRange": {
+      "today": "Today",
+      "threeDays": "3 Days",
+      "sevenDays": "7 Days"
+    },
+    "timeline": {
+      "title": "Behavior Timeline"
+    },
+    "events": {
+      "title": "Recent Activity",
+      "empty": "No activity recorded for this period."
+    }
   },
   "overview": {
     "searchPlaceholder": "Search cameras...",

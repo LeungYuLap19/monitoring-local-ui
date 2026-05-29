@@ -9,7 +9,7 @@ import MonitoringHeader from '../components/pages/overview/MonitoringHeader';
 import CameraFeedGrid from '../components/pages/overview/CameraFeedGrid';
 
 export default function OverviewPage() {
-  const { onSelectCamera, onOpenXiaomiLogin, xiaomiConnected } = useLayoutContext();
+  const { onSelectCamera, onOpenXiaomiLogin, onXiaomiLogout, xiaomiConnected } = useLayoutContext();
   const { cameraPetMap } = useCameraPetMap();
   const currentUser = getCurrentSessionUser();
   const isNgo = currentUser?.role === 'ngo';
@@ -87,6 +87,7 @@ export default function OverviewPage() {
           reconnectDisabled={monitor.isLoading}
           xiaomiConnected={xiaomiConnected}
           onOpenXiaomiLogin={onOpenXiaomiLogin}
+          onXiaomiLogout={onXiaomiLogout}
         />
         <CameraFeedGrid
           feeds={filteredFeeds}
