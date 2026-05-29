@@ -16,6 +16,7 @@ const MonitoringPage = lazy(() => import('./pages/MonitoringPage'));
   const params = new URLSearchParams(hash.slice(1));
   const token = params.get('access_token');
   const userJson = params.get('user');
+  const freshLogin = params.get('fresh_login') === '1';
   if (token) {
     setStoredAccessToken(token);
     if (userJson) {
@@ -23,9 +24,10 @@ const MonitoringPage = lazy(() => import('./pages/MonitoringPage'));
         setStoredAuthUser(JSON.parse(userJson));
       } catch { /* ignore */ }
     }
-    // Fresh login — reset local monitoring state
-    fetch('/api/xiaomi/logout', { method: 'POST' }).catch(() => {});
-    fetch('/api/active_cams', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{"active_cams":[]}' }).catch(() => {});
+    if (freshLogin) {
+      fetch('/api/xiaomi/logout', { method: 'POST' }).catch(() => {});
+      fetch('/api/active_cams', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{"active_cams":[]}' }).catch(() => {});
+    }
   }
   history.replaceState(null, '', window.location.pathname);
 })();
