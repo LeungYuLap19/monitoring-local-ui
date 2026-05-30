@@ -46,7 +46,7 @@ export default function CameraFeedGrid({
   }
 
   return (
-    <div id="camera-feeds-layout" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div id="camera-feeds-layout" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {feeds.map(feed => (
         <CameraCard key={feed.id} feed={feed} onSelectCamera={onSelectCamera} />
       ))}

@@ -115,13 +115,13 @@ export default function BehaviorStats({
           </div>
 
           {!placeholder && totalActivities > 0 && (
-            <div className="grid grid-cols-1 min-[400px]:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3">
               {insights.dominant && (
                 <div className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100">
                   <Activity className="size-4 text-teal-500 shrink-0" />
                   <div className="min-w-0">
                     <p className="text-[10px] text-slate-400 font-bold uppercase">{t('monitoring.insights.dominantLabel')}</p>
-                    <p className="text-xs font-bold text-slate-700 truncate">{t(insights.dominant.label)} · {formatBehaviorDuration(insights.dominant.value)}</p>
+                    <p className="text-xs font-bold text-slate-700">{t(insights.dominant.label)} · {formatBehaviorDuration(insights.dominant.value)}</p>
                   </div>
                 </div>
               )}
@@ -139,7 +139,7 @@ export default function BehaviorStats({
                   <AlertCircle className={`size-4 shrink-0 ${insights.alertLevel === 'warning' ? 'text-amber-600' : 'text-emerald-500'}`} />
                   <div className="min-w-0">
                     <p className={`text-[10px] font-bold uppercase ${insights.alertLevel === 'warning' ? 'text-amber-500' : 'text-emerald-400'}`}>{t('monitoring.insights.alertLabel')}</p>
-                    <p className={`text-xs font-bold truncate ${insights.alertLevel === 'warning' ? 'text-amber-700' : 'text-emerald-700'}`}>{insights.alert}</p>
+                    <p className={`text-xs font-bold ${insights.alertLevel === 'warning' ? 'text-amber-700' : 'text-emerald-700'}`}>{insights.alert}</p>
                   </div>
                 </div>
               )}

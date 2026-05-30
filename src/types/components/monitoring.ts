@@ -1,7 +1,7 @@
 import { ActivityCount, ActivityClip, CameraFeed, StatByTime } from '../constants/domain';
 import { PetMonitorCameraSnapshot } from '../lib/monitoring';
 
-export type FilterCategory = 'all' | 'active' | 'eat' | 'drink' | 'abnormal';
+export type FilterCategory = 'all' | 'active' | 'eat' | 'drink';
 
 export interface PetSelectorProps {
   selectedPetId: string;

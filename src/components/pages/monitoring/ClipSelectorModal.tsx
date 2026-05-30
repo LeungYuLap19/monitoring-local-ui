@@ -1,10 +1,9 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Download, Film, ShieldAlert, Check } from 'lucide-react';
+import { Download, Film, ShieldAlert, Check } from 'lucide-react';
 import { ActivityClip, ClipSelectorModalProps, FilterCategory } from '../../../types';
 import { ACTIVITY_CLIPS } from '../../../constants';
 import { useTranslation } from '../../../lib/i18n';
 import { Button } from '../../ui/button';
-import { Input } from '../../ui/input';
 import { Badge } from '../../ui/badge';
 import { Tabs, TabsList, TabsTrigger } from '../../ui/tabs';
 import {
@@ -24,25 +23,19 @@ export default function ClipSelectorModal({
 }: ClipSelectorModalProps) {
   const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState<FilterCategory>('all');
-  const [searchQuery, setSearchQuery] = useState('');
   const [downloadedClips, setDownloadedClips] = useState<string[]>([]);
 
   const filteredClips = useMemo(() => {
     return clips.filter(clip => {
-      const matchesPet = clip.petName.toLowerCase() === petName.toLowerCase() ||
-        clip.petName.toLowerCase().startsWith('camera');
-      const matchesSearch = clip.action.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            clip.timestamp.toLowerCase().includes(searchQuery.toLowerCase());
       const normalizedAction = clip.action.toLowerCase();
       const matchesCategory =
         activeCategory === 'all' ? true :
-        activeCategory === 'active' ? (clip.action.includes('活動') || clip.action.includes('奔跑') || clip.action.includes('探索') || normalizedAction.includes('active')) :
-        activeCategory === 'eat' ? clip.action.includes('進食') || normalizedAction.includes('eat') :
-        activeCategory === 'drink' ? clip.action.includes('喝水') || normalizedAction.includes('drink') :
-        activeCategory === 'abnormal' ? clip.isUrgent : true;
-      return matchesPet && matchesSearch && matchesCategory;
+        activeCategory === 'active' ? (clip.action.includes('活動') || clip.action.includes('奔跑') || clip.action.includes('探索') || normalizedAction.includes('active') || normalizedAction.includes('moving')) :
+        activeCategory === 'eat' ? (clip.action.includes('進食') || normalizedAction.includes('eat')) :
+        activeCategory === 'drink' ? (clip.action.includes('喝水') || normalizedAction.includes('drink')) : true;
+      return matchesCategory;
     });
-  }, [activeCategory, petName, clips, searchQuery]);
+  }, [activeCategory, clips]);
 
   const handleDownload = (clipId: string) => {
     if (downloadedClips.includes(clipId)) return;
@@ -61,14 +54,14 @@ export default function ClipSelectorModal({
         <DialogHeader className="px-4 sm:px-8 py-4 border-b border-slate-100 bg-slate-50/50">
           <DialogTitle className="text-base font-black text-slate-800 flex items-center gap-2">
             <Film className="size-5 text-teal-600" />
-            <span>{t('monitoring.clips.title', { name: petName })}</span>
+            <span>{t('monitoring.clips.titleGeneric')}</span>
           </DialogTitle>
           <DialogDescription className="text-xs text-slate-400 font-medium mt-0.5">
             {t('monitoring.clips.description')}
           </DialogDescription>
         </DialogHeader>
 
-        <div className="p-4 sm:p-6 bg-slate-50 border-b border-slate-100 flex flex-col lg:flex-row gap-4 justify-between items-center">
+        <div className="p-4 sm:p-6 bg-slate-50 border-b border-slate-100">
           <Tabs value={activeCategory} onValueChange={(v) => setActiveCategory(v as FilterCategory)}>
             <TabsList className="flex flex-wrap items-center gap-1.5 w-full lg:w-auto bg-transparent h-auto p-0">
               <TabsTrigger value="all" className="px-3 py-1.5 rounded-xl text-xs font-bold data-[state=active]:bg-teal-600 data-[state=active]:text-white data-[state=active]:shadow bg-white text-slate-500 hover:bg-slate-100/50">
@@ -83,22 +76,8 @@ export default function ClipSelectorModal({
               <TabsTrigger value="drink" className="px-3 py-1.5 rounded-xl text-xs font-bold data-[state=active]:bg-teal-600 data-[state=active]:text-white data-[state=active]:shadow bg-white text-slate-500 hover:bg-slate-100/50">
                 {t('monitoring.clips.drink')}
               </TabsTrigger>
-              <TabsTrigger value="abnormal" className="px-3 py-1.5 rounded-xl text-xs font-bold data-[state=active]:bg-rose-500 data-[state=active]:text-white data-[state=active]:shadow-md data-[state=active]:shadow-rose-200 bg-white text-rose-500 hover:bg-rose-50">
-                {t('monitoring.clips.abnormal')}
-              </TabsTrigger>
             </TabsList>
           </Tabs>
-
-          <div className="relative shrink-0 w-full lg:w-60">
-            <Search className="absolute left-3 top-2.5 size-3.5 text-slate-400" />
-            <Input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={t('monitoring.clips.searchPlaceholder')}
-              className="pl-9 pr-3 py-2 text-xs font-medium bg-white"
-            />
-          </div>
         </div>
 
         <div className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-8 bg-slate-50/30">

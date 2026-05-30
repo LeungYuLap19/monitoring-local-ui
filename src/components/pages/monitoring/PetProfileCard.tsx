@@ -66,26 +66,17 @@ export default function PetProfileCard({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-slate-100 text-xs">
-        <div className="bg-amber-50/50 p-3.5 rounded-xl text-slate-600 flex gap-3">
-          <AlertCircle className="size-4 text-amber-500 shrink-0 mt-0.5" />
-          <div>
-            <span className="block font-bold text-slate-700 mb-0.5">{t('overview.petProfile.notesLabel')}</span>
-            <span className="font-medium text-slate-500">{notes}</span>
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-4 border-t border-slate-100 text-xs">
+        <div className="bg-amber-50/50 p-3 rounded-xl text-slate-600 flex items-center gap-2">
+          <AlertCircle className="size-3.5 text-amber-500 shrink-0" />
+          <span className="font-medium text-slate-500 truncate">{notes}</span>
         </div>
 
-        <div className="bg-sky-50/50 p-3.5 rounded-xl text-slate-600 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div className="flex gap-3">
-            <span className="text-sky-500 font-extrabold text-xs shrink-0 mt-0.5">&#10054;</span>
-            <div>
-              <span className="block font-bold text-slate-700 mb-0.5 font-sans">{t('overview.petProfile.servicesLabel')}</span>
-              <span className="font-medium text-slate-500">{extraDetails}</span>
-            </div>
-          </div>
+        <div className="bg-sky-50/50 p-3 rounded-xl text-slate-600 flex items-center justify-between gap-2">
+          <span className="font-medium text-slate-500 truncate">{extraDetails}</span>
           <button
             onClick={onOpenClipsModal}
-            className="text-[11px] bg-teal-600 hover:bg-[#0c857a] text-white font-extrabold px-3 py-1.5 rounded-lg shrink-0 transition-all cursor-pointer shadow-sm w-full sm:w-auto text-center"
+            className="text-[11px] bg-teal-600 hover:bg-[#0c857a] text-white font-extrabold px-3 py-1.5 rounded-lg shrink-0 transition-all cursor-pointer shadow-sm"
           >
             {t('overview.petProfile.clipsBtn')}
           </button>

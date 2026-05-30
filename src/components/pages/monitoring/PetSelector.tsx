@@ -25,21 +25,18 @@ export default function PetSelector({
       </div>
 
       <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-bold text-slate-400">{t('monitoring.currentlyWatching')}</span>
-          <div className="relative">
-            <select
-              id="active-pet-selector"
-              value={selectedPetId}
-              onChange={(e) => setSelectedPetId(e.target.value)}
-              className="appearance-none bg-slate-50 rounded-xl px-4 py-1.5 pr-8 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500/10 cursor-pointer"
-            >
-              {cameraFeeds.map((feed) => (
-                <option key={feed.id} value={feed.id}>{feed.petName || feed.name}</option>
-              ))}
-            </select>
-            <ChevronDown className="size-3.5 text-slate-500 absolute right-2.5 top-2.5 pointer-events-none" />
-          </div>
+        <div className="relative">
+          <select
+            id="active-pet-selector"
+            value={selectedPetId}
+            onChange={(e) => setSelectedPetId(e.target.value)}
+            className="appearance-none bg-slate-50 rounded-xl px-4 py-1.5 pr-8 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500/10 cursor-pointer"
+          >
+            {cameraFeeds.map((feed) => (
+              <option key={feed.id} value={feed.id}>{feed.petName || feed.name}</option>
+            ))}
+          </select>
+          <ChevronDown className="size-3.5 text-slate-500 absolute right-2.5 top-2.5 pointer-events-none" />
         </div>
         {onLinkPet && (
           <Button variant="outline" size="sm" onClick={onLinkPet} className="gap-1.5">
