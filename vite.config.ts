@@ -12,7 +12,8 @@ export default defineConfig(() => {
       },
     },
     build: {
-      outDir: 'dist',
+      outDir: '../PetMonitorDashboard/backend/static',
+      emptyOutDir: true,
       rollupOptions: {
         output: {
           manualChunks(id) {

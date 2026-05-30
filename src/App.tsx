@@ -5,6 +5,7 @@ import AuthenticatedLayout from './components/global/AuthenticatedLayout';
 import RouteScrollReset from './components/global/RouteScrollReset';
 import { Toaster } from './components/ui/sonner';
 import { setStoredAccessToken, setStoredAuthUser } from './lib/utils/auth';
+import { queryClient } from './lib/queryClient';
 
 const OverviewPage = lazy(() => import('./pages/OverviewPage'));
 const MonitoringPage = lazy(() => import('./pages/MonitoringPage'));
@@ -18,6 +19,8 @@ const MonitoringPage = lazy(() => import('./pages/MonitoringPage'));
   const userJson = params.get('user');
   const freshLogin = params.get('fresh_login') === '1';
   if (token) {
+    queryClient.clear();
+    window.sessionStorage.removeItem('pet-query-cache');
     setStoredAccessToken(token);
     if (userJson) {
       try {

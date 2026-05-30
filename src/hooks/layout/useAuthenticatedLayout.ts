@@ -90,9 +90,11 @@ export function useAuthenticatedLayout() {
   }, [navigate, showToast]);
 
   const handleLogout = useCallback(() => {
+    queryClient.clear();
+    window.sessionStorage.removeItem('pet-query-cache');
     const vercelUrl = import.meta.env.VITE_VERCEL_URL || 'https://monitoring-dashboard-eosin.vercel.app';
     window.location.href = `${vercelUrl}/login?logout=true`;
-  }, []);
+  }, [queryClient]);
 
   const handleXiaomiLogout = useCallback(async () => {
     try {
