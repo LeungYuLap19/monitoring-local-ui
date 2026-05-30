@@ -5,24 +5,23 @@ import type {
   PetMonitorBehaviorTimelineBucket,
 } from '../../types/lib/monitoring';
 import { getStoredAccessToken } from '../utils/auth';
+import { refreshAuthSession } from './authService';
 
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? '').replace(/\/+$/, '');
 const API_KEY = import.meta.env.VITE_API_KEY ?? '';
 
 function authHeaders(): Record<string, string> {
-  const headers: Record<string, string> = {
+  const token = getStoredAccessToken();
+  return {
     'x-api-key': API_KEY,
     'Content-Type': 'application/json',
+    'Authorization': token ? `Bearer ${token}` : 'Bearer none',
   };
-  const token = getStoredAccessToken();
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
-  return headers;
 }
 
 async function fetchJson<T>(url: string): Promise<T> {
   const response = await fetch(url, { headers: authHeaders() });
+  if (response.status === 401) { refreshAuthSession(); throw new Error('Unauthorized'); }
   if (!response.ok) {
     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
   }

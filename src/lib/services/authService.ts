@@ -69,12 +69,10 @@ protectedApiClient.interceptors.request.use((config) => {
   }
 
   const token = getStoredAccessToken();
-  if (token) {
-    if (!config.headers) {
-      config.headers = {} as any;
-    }
-    (config.headers as Record<string, string>).Authorization = `Bearer ${token}`;
+  if (!config.headers) {
+    config.headers = {} as any;
   }
+  (config.headers as Record<string, string>).Authorization = token ? `Bearer ${token}` : 'Bearer none';
   return config;
 });
 

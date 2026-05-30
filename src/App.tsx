@@ -4,7 +4,7 @@ import { I18nProvider } from './lib/i18n';
 import AuthenticatedLayout from './components/global/AuthenticatedLayout';
 import RouteScrollReset from './components/global/RouteScrollReset';
 import { Toaster } from './components/ui/sonner';
-import { setStoredAccessToken, setStoredAuthUser } from './lib/utils/auth';
+import { getStoredAccessToken, getStoredAuthUser, setStoredAccessToken, setStoredAuthUser } from './lib/utils/auth';
 import { queryClient } from './lib/queryClient';
 
 const OverviewPage = lazy(() => import('./pages/OverviewPage'));
@@ -13,21 +13,32 @@ const MonitoringPage = lazy(() => import('./pages/MonitoringPage'));
 // Read token from hash BEFORE React renders (synchronous)
 (function initHashToken() {
   const hash = window.location.hash;
-  if (!hash) return;
+  if (!hash) {
+    // No hash = normal page load/refresh. Token is in-memory only, so it's gone.
+    // Redirect to Vercel to re-authenticate.
+    const vercelUrl = import.meta.env.VITE_VERCEL_URL || 'https://monitoring-dashboard-eosin.vercel.app';
+    const returnPath = window.location.pathname;
+    window.location.href = `${vercelUrl}/login?returnLocal=${encodeURIComponent(returnPath)}`;
+    return;
+  }
   const params = new URLSearchParams(hash.slice(1));
   const token = params.get('access_token');
   const userJson = params.get('user');
-  const freshLogin = params.get('fresh_login') === '1';
   if (token) {
+    const prevUser = getStoredAuthUser();
     queryClient.clear();
     window.sessionStorage.removeItem('pet-query-cache');
     setStoredAccessToken(token);
+    let newUserId: string | undefined;
     if (userJson) {
       try {
-        setStoredAuthUser(JSON.parse(userJson));
+        const parsed = JSON.parse(userJson);
+        newUserId = parsed?.id;
+        setStoredAuthUser(parsed);
       } catch { /* ignore */ }
     }
-    if (freshLogin) {
+    const userChanged = !prevUser || prevUser.id !== newUserId;
+    if (userChanged) {
       fetch('/api/xiaomi/logout', { method: 'POST' }).catch(() => {});
       fetch('/api/active_cams', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{"active_cams":[]}' }).catch(() => {});
     }
