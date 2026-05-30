@@ -314,11 +314,10 @@ export async function bootstrapSessionWithToken(token: string, fallbackRole?: st
 }
 
 export async function refreshAuthSession(): Promise<AuthUser | null> {
-  // Local frontend cannot refresh tokens (cookie is bound to AWS domain).
-  // Redirect to Vercel to re-authenticate and come back with a fresh token.
   const vercelUrl = import.meta.env.VITE_VERCEL_URL || 'https://monitoring-dashboard-eosin.vercel.app';
   const returnPath = window.location.pathname;
-  window.location.href = `${vercelUrl}/login?returnLocal=${encodeURIComponent(returnPath)}`;
+  const lang = localStorage.getItem('hkbr_locale')?.replace(/"/g, '') || 'zh-TW';
+  window.location.href = `${vercelUrl}/login?returnLocal=${encodeURIComponent(returnPath)}&lang=${lang}`;
   return null;
 }
 

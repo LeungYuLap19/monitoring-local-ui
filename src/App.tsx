@@ -18,12 +18,17 @@ const MonitoringPage = lazy(() => import('./pages/MonitoringPage'));
     // Redirect to Vercel to re-authenticate.
     const vercelUrl = import.meta.env.VITE_VERCEL_URL || 'https://monitoring-dashboard-eosin.vercel.app';
     const returnPath = window.location.pathname;
-    window.location.href = `${vercelUrl}/login?returnLocal=${encodeURIComponent(returnPath)}`;
+    const lang = localStorage.getItem('hkbr_locale')?.replace(/"/g, '') || 'zh-TW';
+    window.location.href = `${vercelUrl}/login?returnLocal=${encodeURIComponent(returnPath)}&lang=${lang}`;
     return;
   }
   const params = new URLSearchParams(hash.slice(1));
   const token = params.get('access_token');
   const userJson = params.get('user');
+  const lang = params.get('lang');
+  if (lang && (lang === 'en' || lang === 'zh-TW')) {
+    localStorage.setItem('hkbr_locale', JSON.stringify(lang));
+  }
   if (token) {
     const prevUser = getStoredAuthUser();
     queryClient.clear();
